@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<script
+src="https://code.jquery.com/jquery-3.7.1.min.js"
+integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+crossorigin="anonymous"
+></script>
+<style>
+
+body {
+    background-color: black;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+} 
+
+.box {
+    background-color: rgb(44, 172, 172);
+    min-height: 40vh;
+    border-radius: 5px;
+    margin: auto;
+}
+
+button {
+    background-color: black;
+    color: white;
+}
+
+p {
+    margin: 5px;
+}
+</style>
+<body>
+
+<div class="box">
+<!-- <button type="submit" id="get-picture">Click for Today's Picture of the Day</button> -->
+<h1>
+
+</h1>
+<img src="">
+</img>
+<iframe width="560" height="315" src="" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<p>
+</p>
+</div>
+</body>
+<script type="text/javascript">
+    
+    $(document).ready( function () {
+  
+      /* // using ajax */
+      $.ajax({
+        type: "GET",
+        url: "/picture",
+        dataType: 'json',
+        data: {
+          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function (data) {
+            console.log(data)
+        source = data['url']
+        desc = data['explanation']
+        type = data['media_type']
+        title = data['title']
+        
+        if (type === "video"){
+            $("iframe").prop("src", source);
+        }
+          
+        else if (type === "image"){
+            $("img").prop("src", source);
+        }
+          
+            
+        $("p").text(desc);
+        $("h1").text(title)
+        console.log("Succeeded");
+        },
+      });
+    });
+  
+   
+  </script>
